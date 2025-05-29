@@ -3,7 +3,7 @@ import { Car } from '../models/car';
 import { ParkingLotService } from '../services/parkingLotService';
 
 const parkingService = new ParkingLotService();
-parkingService.initializeParkingLot(2);
+parkingService.initializeParkingLot(10);
 
 
 export const parkCar = (req: Request, res: Response) => {

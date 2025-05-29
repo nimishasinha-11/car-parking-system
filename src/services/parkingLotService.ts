@@ -13,21 +13,19 @@ export class ParkingLotService {
   initializeParkingLot(size: number): void {
     this.capacity = size;
     this.slots = [];
+    var j = 0
     for (let i = 1; i <= size; i++) {
-      this.slots.push({ slotNumber: i, isOccupied: false });
+        var isElectrical = false
+        if (j < (0.2 * size)){
+            isElectrical = true
+        }
+        this.slots.push({ slotNumber: i, isOccupied: false, isEv: isElectrical });
+        j ++
     }
-  }
-
-  expandParkingLot(extraSlots: number): void {
-    const start = this.slots.length + 1;
-    for (let i = start; i < start + extraSlots; i++) {
-      this.slots.push({ slotNumber: i, isOccupied: false });
-    }
-    this.capacity += extraSlots;
   }
 
   parkCar(car: Car): Ticket | null {
-    const freeSlot = this.slots.find((slot) => !slot.isOccupied);
+    const freeSlot = this.slots.find((slot) => !slot.isOccupied && slot.isEv===car.isEv);
     if (!freeSlot) return null;
 
     freeSlot.isOccupied = true;
