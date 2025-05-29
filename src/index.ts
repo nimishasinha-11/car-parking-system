@@ -1,14 +1,14 @@
 import express from 'express';
+import parkingRoutes from './routes/parkingRoutes';
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use('/api', parkingRoutes);
 
-app.get('/test', (req,res) =>{
-    res.json({message: 'test api!'});
-});
+
 
 app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
+    console.log(`🚗 Parking lot server running on http://localhost:${PORT}`);
   });
