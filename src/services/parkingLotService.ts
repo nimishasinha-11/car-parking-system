@@ -25,6 +25,13 @@ export class ParkingLotService {
     return this.slots.length
   }
 
+  incrementParkingLot(size: number): number {
+    for (let i = 1; i <= size; i++) {
+        this.slots.push({ slotNumber: i, isOccupied: false, isEv: false });
+    }
+    return this.slots.length
+  }
+
   isAlreadyInitialised() : boolean {
     return this.isInitialised
   }

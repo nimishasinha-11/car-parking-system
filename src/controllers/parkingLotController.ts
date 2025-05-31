@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Car } from '../models/car';
 import { ParkingLotService } from '../services/parkingLotService';
-import { InitialiseRequest } from '../models/parkingLot';
+import { IncrementParkingLot, InitialiseRequest } from '../models/parkingLot';
 
 const parkingService = new ParkingLotService();
 
@@ -19,6 +19,15 @@ export const initializeParkingLot = (req: Request, res: Response) => {
   res.status(201).json({total_slots : totalSlots});
 }
 
+export const incrementParkingLot = (req: Request, res: Response) => {
+  if (!parkingService.isAlreadyInitialised()) {
+    res.status(400).json({ message: 'Parking lot is not initialised'})
+    return
+  }
+  const incrementParkingLot: IncrementParkingLot = req.body
+  var totalSlots = parkingService.incrementParkingLot(incrementParkingLot.increment_slot);
+  res.status(200).json({total_slots : totalSlots});
+}
 
 export const parkCar = (req: Request, res: Response) => {
   const car: Car = req.body;
