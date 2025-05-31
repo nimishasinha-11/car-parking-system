@@ -11,4 +11,4 @@ app.use('/api', parkingRoutes);
 
 app.listen(PORT, () => {
     console.log(`🚗 Parking lot server running on http://localhost:${PORT}`);
-  });
+});

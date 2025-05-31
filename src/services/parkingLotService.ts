@@ -1,3 +1,4 @@
+import { exitCode } from 'process';
 import { Car } from '../models/car';
 import { ParkingSlot, StatusResponse } from '../models/parkingSlot';
 import { Ticket } from '../models/ticket';
@@ -113,10 +114,16 @@ export class ParkingLotService {
         } else {
             this.revenue += 50
         }
+
+        var ticket = this.tickets.filter((ticket) => ticket.registrationNumber == slots[0].parkedCar?.car_reg_no && ticket.exitedAt == undefined);
+        if (ticket.length > 0) {
+            ticket[0].exitedAt = new Date()
+        }
+        
         slots[0].isOccupied = false
         slots[0].parkedCar = undefined
         return slots[0].slotNumber
-    } 
+    }
 
     clearSlotByRegNum(regNum: string): number {
         var slots = this.slots.filter((slot) => slot.parkedCar?.car_reg_no == regNum)
@@ -128,6 +135,12 @@ export class ParkingLotService {
         } else {
             this.revenue += 50
         }
+
+        var ticket = this.tickets.filter((ticket) => ticket.registrationNumber == slots[0].parkedCar?.car_reg_no && ticket.exitedAt == undefined);
+        if (ticket.length > 0) {
+            ticket[0].exitedAt = new Date()
+        }
+
         slots[0].isOccupied = false
         slots[0].parkedCar = undefined
         return slots[0].slotNumber

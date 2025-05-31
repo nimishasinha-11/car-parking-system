@@ -1,6 +1,7 @@
 export interface Ticket {
-    ticketId: string;
-    slotNumber: number;
-    registrationNumber: string;
-    issuedAt: Date;
-  }
+  ticketId: string;
+  slotNumber: number;
+  registrationNumber: string;
+  issuedAt: Date;
+  exitedAt?: Date;
+}
