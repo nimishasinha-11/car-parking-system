@@ -13,3 +13,8 @@ export interface StatusResponse {
   colour: string;
   is_ev: boolean
 }
+
+export interface clearSlotRequest {
+  slot_number?: number;
+  car_reg_no?: string
+}

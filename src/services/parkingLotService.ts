@@ -1,5 +1,3 @@
-// src/services/parkingLot.service.ts
-
 import { Car } from '../models/car';
 import { ParkingSlot, StatusResponse } from '../models/parkingSlot';
 import { Ticket } from '../models/ticket';
@@ -9,6 +7,7 @@ export class ParkingLotService {
     private slots: ParkingSlot[] = [];
     private tickets: Ticket[] = [];
     private isInitialised: boolean = false
+    private revenue: number = 0
 
     initializeParkingLot(size: number): number {
         this.slots = [];
@@ -102,6 +101,36 @@ export class ParkingLotService {
             res.push(s)
         }
         return res
+    }
+
+    clearSlotBySlotNo(slotNo: number): number {
+        var slots = this.slots.filter((slot) => slot.slotNumber == slotNo && slot.isOccupied === true)
+        if (slots.length === 0) {
+            return 0
+        }
+        if (slots[0].parkedCar?.is_ev) {
+            this.revenue += 100
+        } else {
+            this.revenue += 50
+        }
+        slots[0].isOccupied = false
+        slots[0].parkedCar = undefined
+        return slots[0].slotNumber
+    } 
+
+    clearSlotByRegNum(regNum: string): number {
+        var slots = this.slots.filter((slot) => slot.parkedCar?.car_reg_no == regNum)
+        if (slots.length === 0) {
+            return 0
+        }
+        if (slots[0].parkedCar?.is_ev) {
+            this.revenue += 100
+        } else {
+            this.revenue += 50
+        }
+        slots[0].isOccupied = false
+        slots[0].parkedCar = undefined
+        return slots[0].slotNumber
     }
 
     getTicketTicketByRegNum(registrationNumber: string): Ticket[] | null {

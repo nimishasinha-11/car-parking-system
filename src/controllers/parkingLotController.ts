@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Car } from '../models/car';
 import { ParkingLotService } from '../services/parkingLotService';
 import { IncrementParkingLot, InitialiseRequest } from '../models/parkingLot';
+import { clearSlotRequest } from '../models/parkingSlot';
 
 const parkingService = new ParkingLotService();
 
@@ -58,6 +59,28 @@ export const getSlotnumByColour = (req: Request, res: Response) => {
 export const getStatus = (req: Request, res: Response) => {
   var occupiedSlots = parkingService.getStatus()
   res.status(200).json(occupiedSlots)
+}
+
+export const clearSlot = (req: Request, res: Response) => {
+  const clearSlotRequest: clearSlotRequest = req.body
+  if (clearSlotRequest.slot_number) {
+    const slot = parkingService.clearSlotBySlotNo(clearSlotRequest.slot_number)
+    if (slot == 0) {
+      res.status(404).json({error: 'slot number not found or is already free'})
+      return
+    }
+    res.status(200).json({'freed_slot_number': slot})
+    return
+  } else if (clearSlotRequest.car_reg_no) {
+    const slot = parkingService.clearSlotByRegNum(clearSlotRequest.car_reg_no)
+    if (slot == 0) {
+      res.status(404).json({error: 'slot number not found for reg number'})
+      return
+    }
+    res.status(200).json({'freed_slot_number': slot})
+    return
+  }
+  res.status(400).json({message: "invalid request"})
 }
 
 export const getTicket = (req: Request, res: Response) => {
