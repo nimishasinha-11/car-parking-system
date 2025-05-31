@@ -150,4 +150,7 @@ export class ParkingLotService {
         return slot ? slot.slotNumber : null;
     }
 
+    getRevenue(): number {
+        return this.revenue
+    }
 }

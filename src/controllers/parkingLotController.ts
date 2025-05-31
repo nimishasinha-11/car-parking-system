@@ -101,3 +101,7 @@ export const getTicket = (req: Request, res: Response) => {
   }
 
 }
+
+export const getRevenue = (req: Request, res: Response) => {
+  res.status(200).json({total_revenue: parkingService.getRevenue()})
+}
