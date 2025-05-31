@@ -36,8 +36,8 @@ export class ParkingLotService {
     return this.isInitialised
   }
 
-  parkCar(car: Car): Ticket | null {
-    const freeSlot = this.slots.find((slot) => !slot.isOccupied && slot.isEv===car.isEv);
+  parkCar(car: Car): | number | null { 
+    const freeSlot = this.slots.find((slot) => !slot.isOccupied && slot.isEv===car.is_ev);
     if (!freeSlot) return null;
 
     freeSlot.isOccupied = true;
@@ -46,11 +46,11 @@ export class ParkingLotService {
     const ticket: Ticket = {
       ticketId: uuidv4(),
       slotNumber: freeSlot.slotNumber,
-      registrationNumber: car.registrationNumber,
+      registrationNumber: car.car_reg_no,
       issuedAt: new Date(),
     };
     this.tickets.push(ticket);
-    return ticket;
+    return ticket.slotNumber;
   }
 
   freeSlot(slotNumber: number): boolean {
@@ -81,7 +81,7 @@ export class ParkingLotService {
 
   getSlotByRegistration(registrationNumber: string): number | null {
     const slot = this.slots.find(
-      (s) => s.isOccupied && s.parkedCar?.registrationNumber === registrationNumber
+      (s) => s.isOccupied && s.parkedCar?.car_reg_no === registrationNumber
     );
     return slot ? slot.slotNumber : null;
   }

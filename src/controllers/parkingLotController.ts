@@ -30,13 +30,17 @@ export const incrementParkingLot = (req: Request, res: Response) => {
 }
 
 export const parkCar = (req: Request, res: Response) => {
+  if (!parkingService.isAlreadyInitialised()) {
+    res.status(400).json({ message: 'Parking lot is not initialised'})
+    return
+  }
   const car: Car = req.body;
-  const ticket = parkingService.parkCar(car);
-  if (!ticket) {
+  const slotNumber = parkingService.parkCar(car); 
+  if (!slotNumber) {
     res.status(400).json({ message: 'Parking is full' });
     return
   }
-  res.status(201).json(ticket);
+  res.status(201).json({allocated_slot_number: slotNumber}); 
 };
 
 export const getTicket = (req: Request, res: Response) => {

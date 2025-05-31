@@ -1,5 +1,5 @@
 export interface Car {
-    registrationNumber: string;
-    colour: string;
-    isEv: boolean
+    car_reg_no: string;
+    car_colour: string;
+    is_ev: boolean
   }
