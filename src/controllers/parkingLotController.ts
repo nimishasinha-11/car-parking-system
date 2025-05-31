@@ -55,6 +55,11 @@ export const getSlotnumByColour = (req: Request, res: Response) => {
   res.status(200).json(slotNum)
 }
 
+export const getStatus = (req: Request, res: Response) => {
+  var occupiedSlots = parkingService.getStatus()
+  res.status(200).json(occupiedSlots)
+}
+
 export const getTicket = (req: Request, res: Response) => {
   var regNum = req.params.regnum
   if (regNum) {

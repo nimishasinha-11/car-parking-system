@@ -6,3 +6,10 @@ export interface ParkingSlot {
   parkedCar?: Car; 
   isEv: boolean
 }
+
+export interface StatusResponse {
+  slot_no: number
+  registartion_no: string;
+  colour: string;
+  is_ev: boolean
+}
