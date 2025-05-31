@@ -15,8 +15,10 @@ export class ParkingLotService {
         var j = 0
         for (let i = 1; i <= size; i++) {
             var isElectrical = false
-            if (j < (0.2 * size)) {
-                isElectrical = true
+            if (j < (0.5 * size)) {
+                if (size > 1) {
+                    isElectrical = true
+                }
             }
             this.slots.push({ slotNumber: i, isOccupied: false, isEv: isElectrical });
             j++
@@ -26,8 +28,15 @@ export class ParkingLotService {
     }
 
     incrementParkingLot(size: number): number {
+        var j = 0
         for (let i = 1; i <= size; i++) {
-            this.slots.push({ slotNumber: i, isOccupied: false, isEv: false });
+            var isElectrical = false
+            if (j < (0.5 * size)) {
+                if (size > 1) {
+                    isElectrical = true
+                }
+            }
+            this.slots.push({ slotNumber: i, isOccupied: false, isEv: isElectrical });
         }
         return this.slots.length
     }
