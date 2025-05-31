@@ -1,6 +1,4 @@
-import { ParkingSlot } from './parkingSlot';
 
-export interface ParkingLot {
-  capacity: number;
-  slots: ParkingSlot[];
+export interface InitialiseRequest {
+  no_of_slots: number
 }

@@ -7,11 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class ParkingLotService {
   private slots: ParkingSlot[] = [];
-  private capacity = 0;
   private tickets: Ticket[] = [];
+  private isInitialised: boolean = false
 
-  initializeParkingLot(size: number): void {
-    this.capacity = size;
+  initializeParkingLot(size: number): number {
     this.slots = [];
     var j = 0
     for (let i = 1; i <= size; i++) {
@@ -22,6 +21,12 @@ export class ParkingLotService {
         this.slots.push({ slotNumber: i, isOccupied: false, isEv: isElectrical });
         j ++
     }
+    this.isInitialised = true
+    return this.slots.length
+  }
+
+  isAlreadyInitialised() : boolean {
+    return this.isInitialised
   }
 
   parkCar(car: Car): Ticket | null {

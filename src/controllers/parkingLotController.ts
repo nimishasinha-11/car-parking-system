@@ -1,9 +1,23 @@
 import { Request, Response } from 'express';
 import { Car } from '../models/car';
 import { ParkingLotService } from '../services/parkingLotService';
+import { InitialiseRequest } from '../models/parkingLot';
 
 const parkingService = new ParkingLotService();
-parkingService.initializeParkingLot(10);
+
+export const initializeParkingLot = (req: Request, res: Response) => {
+  const initaliseReqest: InitialiseRequest = req.body
+  if (initaliseReqest.no_of_slots === 0) {
+    res.status(400).json({ message: 'Number of slots must be greater than 0'})
+    return
+  }
+  if (parkingService.isAlreadyInitialised()) {
+    res.status(400).json({ message: 'Parking lot already initialised'})
+    return
+  }
+  var totalSlots = parkingService.initializeParkingLot(initaliseReqest.no_of_slots);
+  res.status(201).json({total_slots : totalSlots});
+}
 
 
 export const parkCar = (req: Request, res: Response) => {
