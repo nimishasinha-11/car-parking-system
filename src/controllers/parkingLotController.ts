@@ -43,6 +43,18 @@ export const parkCar = (req: Request, res: Response) => {
   res.status(201).json({allocated_slot_number: slotNumber}); 
 };
 
+export const getRegnumByColour = (req: Request, res: Response) => {
+  var colour = req.params.car_colour
+  var regNum = parkingService.getRegNumByColour(colour)
+  res.status(200).json(regNum)
+}
+
+export const getSlotnumByColour = (req: Request, res: Response) => {
+  var colour = req.params.car_colour
+  var slotNum = parkingService.getSlotNumByColour(colour)
+  res.status(200).json(slotNum)
+}
+
 export const getTicket = (req: Request, res: Response) => {
   var regNum = req.params.regnum
   if (regNum) {

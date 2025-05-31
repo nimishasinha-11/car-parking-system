@@ -69,6 +69,26 @@ export class ParkingLotService {
     return this.tickets
   }
 
+  getRegNumByColour(colour: string): string[] {
+    var slots = this.slots.filter((s) => s.parkedCar?.car_colour == colour);
+    let regNums: string[] = [];
+    for (let index = 0; index < slots.length; index++) {
+        const element = slots[index];
+        regNums.push(String(element.parkedCar?.car_reg_no))
+    }
+    return regNums
+  }
+
+  getSlotNumByColour(colour: string): number[] {
+    var slots = this.slots.filter((s) => s.parkedCar?.car_colour == colour);
+    let slotNum: number[] = [];
+    for (let index = 0; index < slots.length; index++) {
+        const element = slots[index];
+        slotNum.push(element.slotNumber)
+    }
+    return slotNum
+  }
+
   getTicketTicketByRegNum(registrationNumber: string): Ticket[] | null  {
     var ticket = this.tickets.filter((ticket) => ticket.registrationNumber == registrationNumber);
     if (ticket.length == 0) {
